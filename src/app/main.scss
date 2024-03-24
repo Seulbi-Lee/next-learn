@@ -1,0 +1,102 @@
+@import "./globals.scss";
+
+$color-primary: #0095f6;
+$color-border: #dbdbdb;
+$color-primary-text: #000000;
+$color-secondary-text: #737373;
+
+$font-xs: 12px;
+$font-sm: 14px;
+$font-md: 16px;
+$font-lg: 18px;
+$font-xl: 20px;
+
+.font-sm {
+  font-size: $font-sm;
+}
+
+// account
+.account {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+ 
+  .account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 48px 0;
+  }
+
+  .content-image {
+    position: relative;
+    width: 380px;
+    height: 582px;
+    margin-right: 40px;
+    background-image: url(https://static.cdninstagram.com/images/instagram/xig/homepage/phones/home-phones-2x.png?__makehaste_cache_breaker=73SVAexZgBW);
+    background-size: 468.32px 634.15px;
+    background-position: -46px 0;
+
+    .img-account {
+      position: absolute;
+      left: 112px;
+      top: 27px;
+    }
+  }
+
+  .account-box {
+    width: 350px;
+    border: 1px solid $color-border;
+    padding: 20px 40px;
+    text-align: center;
+
+    & + .account-box {
+      margin-top: 10px;
+    }
+
+    .account-logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+      span {
+        display: block;
+        background-image: url(https://static.cdninstagram.com/rsrc.php/v3/yh/r/IS7e616CiR2.png);
+        background-position: 0px 0px;
+        background-size: 176px 258px;
+        background-repeat: no-repeat;
+        width: 175px;
+        height: 51px;
+        font-size: 0;
+      }
+    }
+
+    .link-button {
+      margin-left: 10px;
+      font-size: $font-sm;
+      color: $color-primary;
+      font-weight: 600;
+    }
+
+  }
+}
+
+// footer
+.footer {
+  margin-bottom: 50px;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    font-size: $font-xs;
+    color: $color-secondary-text;
+    line-height: 20px;
+    margin: 18px 0;
+  }
+
+  .link-list {
+    a {
+      padding: 0 10px;
+    }
+  }
+}
