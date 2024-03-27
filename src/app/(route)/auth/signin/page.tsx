@@ -1,13 +1,39 @@
+"use client";
 import AccountComponent from "@/app/(route)/auth/_components/account";
+import { createClient } from "@/app/_utils/_supabase/client";
 import { TextInput, Button, Group, Box, PasswordInput } from "@mantine/core";
 import Link from "next/link";
-import { Metadata } from "next/types";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useRef } from "react";
 
-export const metadata: Metadata = {
-  title: "sign in · instagram",
-};
+const SignInPage = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const supabase = createClient();
+  const router = useRouter();
 
-const SignInPage = async () => {
+  const signInHandler = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: emailRef.current!.value,
+      password: passwordRef.current!.value,
+    });
+
+    if (error) {
+      if (error.status === 400) {
+        alert ("Wrong username or password");
+      } else {
+        alert("Unknown Error: try again");
+      } 
+      return;
+    }
+
+    router.push("/main");
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <>
       <AccountComponent
@@ -16,15 +42,21 @@ const SignInPage = async () => {
         btnText="Sign up"
       >
         <Box mt="xl" mb="sm">
-          <TextInput placeholder="Phone number, username or email" />
-          <PasswordInput mt="xs" placeholder="Password" />
+          <form onSubmit={signInHandler}>
+            <TextInput
+              ref={emailRef}
+              placeholder="Phone number, username or email"
+              required
+            />
+            <PasswordInput ref={passwordRef} mt="xs" placeholder="Password" required/>
 
-          <Button mt="md" fullWidth>
-            Log in
-          </Button>
+            <Button mt="md" fullWidth type="submit">
+              Log in
+            </Button>
+          </form>
         </Box>
         <Group justify="center" mt="xl" mb="md">
-          <Link className="font-sm" href="/auth/resetpw">
+          <Link className="font-sm" href="/auth/forgotpw">
             Forgot password?
           </Link>
         </Group>

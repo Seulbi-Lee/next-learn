@@ -1,27 +1,54 @@
-import AccountComponent from "@/app/(route)/auth/_components/account";
-import { TextInput, Button, Group, Box, PasswordInput } from "@mantine/core";
-import { Metadata } from "next/types";
-
-export const metadata: Metadata = {
-  title: "reset password · instagram",
-}
+"use client"
+import { Box, Button, Group, PasswordInput } from "@mantine/core";
+import { useRef } from "react";
+import AccountComponent from "../_components/account";
+import { createClient } from "@/app/_utils/_supabase/client";
+import { useRouter } from "next/navigation";
 
 const ResetPasswordPage = () => {
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const supabase = createClient();
+  const router = useRouter();
+
+  const passwordHandler = async() => {
+    const { data, error } = await supabase.auth.updateUser({
+      password: passwordRef.current!.value
+    });
+
+    if(error) {
+      console.log(error);
+      return;
+    }
+
+    alert("Password change successful");
+
+    router.push("/");
+  }
+
   return (
     <>
-      <AccountComponent message="" urlAddress="/auth/signin" btnText="Back to login">
+      <AccountComponent
+        message=""
+        urlAddress="/auth/signin"
+        btnText="Back to login"
+      >
         <Group justify="center" mt="lg" mb="md">
-          <p>Trouble logging in?</p>
-          <p>Enter your email, phone, or username and we will send you a link to get back into your account.</p>
+          <p>
+            Enter your new password.
+          </p>
         </Group>
         <Box mt="xl" mb="sm">
-          <TextInput placeholder="Phone number, username or email" />
-
-          <Button mt="md" fullWidth>
-            Send login link
-          </Button>
-        </Box>
-      </AccountComponent>
+          <form onSubmit={passwordHandler}>
+            <PasswordInput
+              ref={passwordRef}
+              placeholder="password"
+            />
+            <Button mt="md" fullWidth type="submit">
+              Reset password
+            </Button>
+          </form>
+        </Box>   
+      </AccountComponent>   
     </>
   );
 }

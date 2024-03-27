@@ -1,26 +1,49 @@
 "use client";
 import AccountComponent from "@/app/(route)/auth/_components/account";
 import { TextInput, Button, Group, Box, PasswordInput } from "@mantine/core";
-import { useRef } from "react";
-import { createClient } from "@/app/_utils/supabase/client";
+import { FormEvent, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/app/_utils/_supabase/client";
 
 const SignUpPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const fullnameRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
   const supabase = createClient();
-  
-  const signInHandler = async (event: any) => {
+  const router = useRouter();
+
+  const signupHandler = async (event: FormEvent) => {
     event.preventDefault();
 
     const { data, error } = await supabase.auth.signUp({
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
+      options: {
+        emailRedirectTo: "http://localhost:3000/",
+        data: {
+          username: usernameRef.current!.value,
+          fullname: fullnameRef.current!.value,
+        },
+      },
     });
+
     if (error) {
-      throw error;
+      if(error.status === 400) {
+        alert("Username already exists");
+      }else{
+        alert("Unknown Error: try again");
+      }
+      return;
     }
-    console.log(emailRef.current!.value, passwordRef.current!.value);
+
+    alert("check your email");
+
+    router.push("/");
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -33,11 +56,11 @@ const SignUpPage = () => {
           <p>Sign up to see photos and videos from your friends.</p>
         </Group>
         <Box mt="xl" mb="sm">
-          <form onSubmit={signInHandler}>
-            <TextInput ref={emailRef} placeholder="Mobile Number or Email" />
-            {/* <TextInput mt="xs" placeholder="Full Name" /> */}
-            {/* <TextInput mt="xs" placeholder="Username" /> */}
-            <PasswordInput ref={passwordRef} mt="xs" placeholder="Password" />
+          <form onSubmit={signupHandler}>
+            <TextInput ref={emailRef} placeholder="Mobile Number or Email" required/>
+            <TextInput ref={fullnameRef} mt="xs" placeholder="Full Name" required/>
+            <TextInput ref={usernameRef} mt="xs" placeholder="Username" required/>
+            <PasswordInput ref={passwordRef} mt="xs" placeholder="Password" required/>
 
             <Button mt="md" fullWidth type="submit">
               Sign up
