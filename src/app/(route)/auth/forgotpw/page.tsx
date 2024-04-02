@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
     event.preventDefault();
 
     const { data, error } = await supabase.auth.resetPasswordForEmail(
-      emailRef.current!.value,
+      emailRef.current!.value.trim(),
       {
         redirectTo: "http://localhost:3000/auth/resetpw",
       }

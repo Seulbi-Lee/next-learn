@@ -1,11 +1,11 @@
-import { CookieOptions, createBrowserClient } from '@supabase/ssr'
+import { CookieOptions, createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers';
 
 export function createServer() {
   const cookieStore = cookies();
 
   // Create a supabase client on the browser with project's credentials
-  return createBrowserClient(
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {

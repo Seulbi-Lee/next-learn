@@ -12,7 +12,7 @@ const ResetPasswordPage = () => {
 
   const passwordHandler = async() => {
     const { data, error } = await supabase.auth.updateUser({
-      password: passwordRef.current!.value
+      password: passwordRef.current!.value.trim()
     });
 
     if(error) {

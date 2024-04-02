@@ -4,7 +4,7 @@ import { createClient } from "@/app/_utils/_supabase/client";
 import { TextInput, Button, Group, Box, PasswordInput } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useRef } from "react";
+import { FormEvent, useRef } from "react";
 
 const SignInPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -16,8 +16,8 @@ const SignInPage = () => {
     event.preventDefault();
 
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: emailRef.current!.value,
-      password: passwordRef.current!.value,
+      email: emailRef.current!.value.trim(),
+      password: passwordRef.current!.value.trim(),
     });
 
     if (error) {
@@ -29,10 +29,8 @@ const SignInPage = () => {
       return;
     }
 
-    router.push("/main");
+    router.push("/");
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>
