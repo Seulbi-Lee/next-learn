@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type navProps = {
-  username: string;
+  username: string | null;
 }
 
 const NavComponent:FC<PropsWithChildren<navProps>> = ({
@@ -31,6 +31,7 @@ const NavComponent:FC<PropsWithChildren<navProps>> = ({
         <div className="user-name">{username}</div>
         <div className="nav-link"><Link href="/main">HOME</Link></div>
         <div className="nav-link"><Link href="/main/chat">MESSAGE</Link></div>
+        <div className="nav-link"><Link href="/main/upload">UPLOAD</Link></div>
         <div className="nav-link"><Link href="/main/profile">PROFILE</Link></div>
         <div className="nav-link logout-btn"><UnstyledButton onClick={logoutHandler}>LOGOUT</UnstyledButton></div>
       </nav>

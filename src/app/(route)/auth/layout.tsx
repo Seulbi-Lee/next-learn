@@ -4,7 +4,7 @@ import { createServer } from "@/app/_utils/_supabase/server";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "instagram",
+  title: "histagram",
 };
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {

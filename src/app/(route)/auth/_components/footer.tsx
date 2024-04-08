@@ -12,12 +12,12 @@ const FooterComponent = () => {
           <a href="/">Privacy</a>
           <a href="/">Terms</a>
           <a href="/">Locations</a>
-          <a href="/">Instagram Lite</a>
+          <a href="/">Histagram Lite</a>
           <a href="/">Threads</a>
           <a href="/">Contact Uploading & Non-Users</a>
           <a href="/">Meta Verified</a>
         </div>
-        <div className="copyright">© 2024 Instagram from Meta</div>
+        <div className="copyright">© 2024 Histagram from Meta</div>
       </footer>
     </>
   );

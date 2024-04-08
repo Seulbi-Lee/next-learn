@@ -17,7 +17,7 @@ const AccountComponent: FC<PropsWithChildren<AccountProps>> = ({
     <div className="account-content">
       <div className="account-box">
         <h1 className="account-logo">
-          <span>instagram</span>
+          <span>histagram</span>
         </h1>
         <div className="account-form">{children}</div>
       </div>

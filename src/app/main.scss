@@ -156,7 +156,7 @@ $font-xl: 20px;
     font-weight: 600;
   }
 
-  button {
+  & > button {
     padding: 10px 20px;
     &:hover {
       background-color: $color-bg;
@@ -172,6 +172,7 @@ $font-xl: 20px;
   .chat-header {
     padding: 10px 20px;
     border-bottom: 1px solid $color-border;
+    min-height: 45px;
 
     .chat-name {
       font-weight: 600;
@@ -184,7 +185,7 @@ $font-xl: 20px;
     display: flex;
     flex-direction: column-reverse;
 
-    .sent {
+    .send {
       display: flex;
       justify-content: flex-end;
     }
@@ -216,7 +217,7 @@ $font-xl: 20px;
       }
     }
 
-    .sent .message-box .sent-body {
+    .send .message-box .sent-body {
       background-color: $color-primary;
       color: $color-white;
     }

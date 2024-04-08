@@ -1,17 +1,17 @@
 "use client";
 import { createClient } from "@/app/_utils/_supabase/client";
-import { Flex, Group, TextInput, UnstyledButton, Button } from "@mantine/core";
-import { FC, FormEvent, PropsWithChildren, useRef } from "react";
+import { Group, TextInput, Button } from "@mantine/core";
+import { FC, FormEvent, useRef } from "react";
+import { useChatSwitchContext } from "../_contexts/chatSwitchProvider";
 
-type chatProps = {
-  currId: string | undefined;
-};
-
-const InsertComponent:FC<PropsWithChildren<chatProps>>  = ({
+const InsertComponent = ({
   currId,
+}: {
+  currId: string;
 }) => {
   const supabase = createClient();
   const sendRef = useRef<HTMLInputElement>(null);
+  const chatSwitch = useChatSwitchContext();
 
   const sendTextHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -21,7 +21,8 @@ const InsertComponent:FC<PropsWithChildren<chatProps>>  = ({
     
     const { error } = await supabase.from("chat_messages").insert({
       body: newMessage,
-      sent_from: currId,
+      sent_from: currId,  // auth.uid() 로 설정 바꿨는데 이거 지우면 오류남
+      sent_to: chatSwitch.store.roomId,
     });
 
     if( error ) {
@@ -32,6 +33,7 @@ const InsertComponent:FC<PropsWithChildren<chatProps>>  = ({
     sendRef.current.value = "";
   }
 
+  if (!chatSwitch.store) return;
   return (
     <>
       <form onSubmit={sendTextHandler}>
